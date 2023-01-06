@@ -10,7 +10,7 @@ interface ProxyConfig {
 }
 
 function proxyPlugin(config: ProxyConfig) {
-  return <T extends any>(pathname: string, method: string, body?: any, opts: RequestOptions = {}): Promise<T> => {
+  return <T extends any>(pathname: string, method: string, body?: string, opts: RequestOptions = {}): Promise<T> => {
     opts.method = method;
     const target = new URL(config.target);
 
@@ -50,7 +50,7 @@ function proxyPlugin(config: ProxyConfig) {
       });
 
       if (opts.headers?.['content-type'] === 'application/json' && body) {
-        req.end(JSON.stringify(body));
+        req.end(body);
       } else {
         req.end(body);
       }
