@@ -1,6 +1,6 @@
 {
   "name": "http-node-proxy-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An http service proxy library",
   "main": "./lib/node/index.cjs",
   "type": "module",
@@ -43,5 +43,8 @@
   },
   "engines": {
 		"node": ">=12"
-	}
+	},
+  "files": [
+    "/lib"
+  ]
 }
