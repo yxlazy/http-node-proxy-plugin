@@ -16,7 +16,7 @@ function proxyPlugin(config: ProxyConfig) {
 
     const rewrite = config.rewrite || ((pathanme: string) => pathanme);
 
-    opts.path = new URL(rewrite(pathname), `${target.protocol}//${target.host}${target.pathname}`).pathname;
+    opts.path = new URL('.' + rewrite(pathname), `${target.protocol}//${target.host}${target.pathname}`).pathname;
     opts.host = target.host;
     opts.hostname = target.hostname;
     opts.port = target.port;
@@ -45,7 +45,7 @@ function proxyPlugin(config: ProxyConfig) {
           resolve((data as Buffer).toString() as T);
         });
       });
-      req.on('error', (err) => {
+      req.on('error', (err) => {        
         reject(err);
       });
 
