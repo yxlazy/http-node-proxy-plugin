@@ -7,6 +7,11 @@ const outputOptions = {
   cjs: './lib/node',
 };
 
+const outputTypes = {
+  es: './lib/index.d.ts',
+  cjs: './lib/index.d.cts',
+};
+
 const plugins = [typescript(), resolve()];
 
 const configs = Object.keys(outputOptions).map((format) => {
@@ -16,7 +21,7 @@ const configs = Object.keys(outputOptions).map((format) => {
     format,
     sourcemap: true,
     // dir,
-    file: format === 'cjs' ? dir + '/index.cjs' : dir + '/index.js'
+    file: format === 'cjs' ? dir + '/index.cjs' : dir + '/index.js',
   };
 
   return {
@@ -26,11 +31,16 @@ const configs = Object.keys(outputOptions).map((format) => {
   };
 });
 
-export default configs.concat({
-  input: './src/index.ts',
-  output: {
-    dir: 'lib',
-    format: 'es',
-  },
-  plugins: [...plugins, dts()],
+const typesConfig = Object.keys(outputTypes).map((format) => {
+  const file = outputTypes[format];
+
+  return {
+    input: './src/index.ts',
+    output: {
+      file,
+      format,
+    },
+    plugins: [...plugins, dts()],
+  };
 });
+export default configs.concat(typesConfig);
